@@ -1,0 +1,16 @@
+<!-- prices/templates/prices/purchase_record_list.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Purchase Records</title>
+</head>
+<body>
+    <h1>Purchase Records</h1>
+    <ul>
+        {% for record in purchase_records %}
+            <li>{{ record.product.title }} - {{ record.date }} - {{ record.price }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
