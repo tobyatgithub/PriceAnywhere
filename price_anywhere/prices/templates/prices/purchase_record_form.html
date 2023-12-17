@@ -2,7 +2,11 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h2>Add Purchase Record</h2>
+  {% if not request.resolver_match.url_name == 'purchase_record_edit' %}
+    <h2>Add Purchase Record</h2>
+  {% else %}
+    <h2>Edit Purchase Record</h2>
+  {% endif %}
   <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
