@@ -1,0 +1,14 @@
+<!-- prices/templates/prices/purchase_record_confirm_delete.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Confirm Deletion</h2>
+  <p>Are you sure you want to delete the purchase record "{{ object }}"?</p>
+
+  <form method="post" style="display: inline;">
+    {% csrf_token %}
+    <button type="submit">Yes, delete</button>
+  </form>
+
+  <a href="{% url 'purchase_record_list' %}">No, cancel</a>
+{% endblock %}
