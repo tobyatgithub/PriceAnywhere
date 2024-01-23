@@ -1,26 +1,60 @@
-/* prices/static/prices/css/styles.css */
-
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f0f0f0;
+    background-color: #f4f4f4;
+    color: #333;
 }
 
-header {
+header nav {
     background-color: #333;
     color: white;
-    padding: 1rem;
+    padding: 10px 0;
     text-align: center;
 }
 
+nav a {
+    color: white;
+    margin: 0 10px;
+    text-decoration: none;
+}
+
 main {
-    margin: 2rem;
+    padding: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+section#about, section#features, section#cta {
+    margin-bottom: 20px;
+}
+
+.cta-button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    display: inline-block;
 }
 
 footer {
     background-color: #333;
     color: white;
-    padding: 1rem;
     text-align: center;
+    padding: 10px 0;
 }

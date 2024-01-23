@@ -1,16 +1,57 @@
-<!-- prices/templates/prices/purchase_record_list.html -->
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Purchase Records</title>
+    <link rel="stylesheet" href="{% static 'prices/css/styles.css' %}">
 </head>
 <body>
-    <h1>Purchase Records</h1>
-    <ul>
-        {% for record in purchase_records %}
-            <li>{{ record.product.title }} - {{ record.date }} - {{ record.price }}</li>
-        {% endfor %}
-    </ul>
+    <header>
+        <!-- Navigation Bar -->
+        <nav>
+            <a href="/">Home</a>
+            <!-- Add other navigation links here -->
+        </nav>
+    </header>
+    <main>
+        <section id="records">
+            <h1>Purchase Records</h1>
+            <table>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Date</th>
+                    <th>Price</th>
+                </tr>
+                {% for record in purchase_records %}
+                    <tr>
+                        <td>{{ record.product_name }}</td>
+                        <td>{{ record.date }}</td>
+                        <td>{{ record.price }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </section>
+        <section id="about">
+            <h2>About</h2>
+            <p>Describe the purpose of your website here.</p>
+        </section>
+        <section id="features">
+            <h2>Features</h2>
+            <ul>
+                <li>Feature 1</li>
+                <li>Feature 2</li>
+                <!-- Add more features -->
+            </ul>
+        </section>
+        <section id="cta">
+            <h2>Get Started</h2>
+            <p>Encourage users to take action.</p>
+            <a href="/start" class="cta-button">Start Now</a>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Your Website Name</p>
+    </footer>
 </body>
 </html>

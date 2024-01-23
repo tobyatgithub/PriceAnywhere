@@ -37,6 +37,10 @@ It shall include:
     10. has_discount
     11. notes
 
+# How to Run
+'''bash
+> python manage.py runserver
+'''
 
 # Possible Add ons
 1. Food nutrition api from EDAMAM (https://developer.edamam.com/food-database-api-demo)
