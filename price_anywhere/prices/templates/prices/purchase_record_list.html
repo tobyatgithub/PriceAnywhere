@@ -1,61 +1,42 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Purchase Records</title>
-    <link rel="stylesheet" href="{% static 'prices/css/styles.css' %}">
-</head>
-<body>
-    <header>
-        <!-- Navigation Bar -->
-        <nav>
-            <a href="/">Home</a>
-            <!-- Add other navigation links here -->
-        </nav>
-    </header>
-    <main>
-        <section id="records">
-            <h1>Purchase Records</h1>
-            <table>
+{% extends 'base.html' %}
+
+{% block content %}
+    <section id="records">
+        <h1>Purchase Records</h1>
+        <table>
+            <tr>
+                <th>Product Name</th>
+                <th>Date</th>
+                <th>Price</th>
+            </tr>
+            {% for record in purchase_records %}
                 <tr>
-                    <th>Product Name</th>
-                    <th>Date</th>
-                    <th>Price</th>
+                    <td>{{ record.product_name }}</td>
+                    <td>{{ record.date }}</td>
+                    <td>{{ record.price }}</td>
                 </tr>
-                {% for record in purchase_records %}
-                    <tr>
-                        <td>{{ record.product_name }}</td>
-                        <td>{{ record.date }}</td>
-                        <td>{{ record.price }}</td>
-                    </tr>
-                {% endfor %}
-            </table>
-        </section>
-        <section id="about">
-            <h2>About</h2>
-            <p>你是否经常面对超市的特价手足无措？</p>
-            <p>看看价格，怀疑这到底值不值得一买?</p>
-            <p>究竟是虚假的打折？还是真实的实惠？</p>
-            <p>我上个月的牛肉是多少钱一磅买的？</p>
-            <p>记下来，建立你自己的数据库和索引</p>
-        </section>
-        <section id="features">
-            <h2>Features</h2>
-            <ul>
-                <li>Feature 1: 存储，录入你曾买过的商品</li>
-                <li>Feature 2: 查找，快速找到曾经买过的同类商品进行比价</li>
-                <!-- Add more features -->
-            </ul>
-        </section>
-        <section id="cta">
-            <h2>Get Started</h2>
-            <p>Encourage users to take action.</p>
-            <a href="/prices/purchase_records/add/" class="cta-button">Add Now</a>
-        </section>
-    </main>
-    <footer>
-        <p>&copy; 2024 Your Website Name</p>
-    </footer>
-</body>
-</html>
+            {% endfor %}
+        </table>
+    </section>
+    <section id="about">
+        <h2>About</h2>
+        <p>你是否经常面对超市的特价手足无措？</p>
+        <p>看看价格，怀疑这到底值不值得一买?</p>
+        <p>究竟是虚假的打折？还是真实的实惠？</p>
+        <p>我上个月的牛肉是多少钱一磅买的？</p>
+        <p>记下来，建立你自己的数据库和索引</p>
+    </section>
+    <section id="features">
+        <h2>Features</h2>
+        <ul>
+            <li>Feature 1: 存储，录入你曾买过的商品</li>
+            <li>Feature 2: 查找，快速找到曾经买过的同类商品进行比价</li>
+            <!-- Add more features -->
+        </ul>
+    </section>
+    <section id="cta">
+        <h2>Get Started</h2>
+        <p>Encourage users to take action.</p>
+        <a href="/prices/purchase_records/add/" class="cta-button">Add Now</a>
+    </section>
+{% endblock %}

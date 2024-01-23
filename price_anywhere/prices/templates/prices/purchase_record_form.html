@@ -1,16 +1,51 @@
 <!-- prices/templates/prices/purchase_record_form.html -->
 {% extends 'base.html' %}
 
+{% load widget_tweaks %}
+
 {% block content %}
-  {% if not request.resolver_match.url_name == 'purchase_record_edit' %}
-    <h2>Add Purchase Record</h2>
-  {% else %}
-    <h2>Edit Purchase Record</h2>
-  {% endif %}
-  <form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Save</button>
-  </form>
-  <a href="{% url 'purchase_record_list' %}">Back to Purchase Records</a>
+  <div class="container mt-4">
+    {% if not request.resolver_match.url_name == 'purchase_record_edit' %}
+      <h2>Add Purchase Record</h2>
+    {% else %}
+      <h2>Edit Purchase Record</h2>
+    {% endif %}
+    <form method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+      {% csrf_token %}
+      <div class="row">
+        {% for field in form %}
+          <div class="col-md-6 mb-3">
+            <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+            {{ field|add_class:'form-control' }}
+            {% if field.help_text %}
+              <div class="form-text">{{ field.help_text }}</div>
+            {% endif %}
+            {% for error in field.errors %}
+              <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+          </div>
+        {% endfor %}
+      </div>
+      <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+    <a href="{% url 'purchase_record_list' %}" class="btn btn-secondary mt-2">Back to Purchase Records</a>
+  </div>
+
+  <script>
+    // JavaScript for Bootstrap validation
+    (function () {
+      'use strict'
+      var forms = document.querySelectorAll('.needs-validation')
+      Array.prototype.slice.call(forms)
+        .forEach(function (form) {
+          form.addEventListener('submit', function (event) {
+            if (!form.checkValidity()) {
+              event.preventDefault()
+              event.stopPropagation()
+            }
+            form.classList.add('was-validated')
+          }, false)
+        })
+    })()
+  </script>
 {% endblock %}

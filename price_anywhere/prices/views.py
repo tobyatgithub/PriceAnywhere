@@ -33,3 +33,7 @@ class PurchaseRecordDeleteView(DeleteView):
     model = PurchaseRecord
     template_name = 'prices/purchase_record_confirm_delete.html'
     success_url = reverse_lazy('purchase_record_list')
+    
+
+def home(request):
+    return render(request, 'prices/purchase_record_list.html')
