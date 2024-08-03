@@ -1,6 +1,5 @@
 # app/routers/price_records.py
 from fastapi import APIRouter, HTTPException
-from app.models.price_record import PriceRecordModel
 from app.schemas.price_record import PriceRecordCreate, PriceRecordUpdate, PriceRecordInDB
 from app.services.price_record_service import PriceRecordService
 
@@ -8,24 +7,24 @@ router = APIRouter()
 
 @router.post("/price_records/", response_model=PriceRecordInDB)
 async def create_price_record(price_record: PriceRecordCreate):
-    price_record_id = await PriceRecordService.create_price_record(price_record)
-    created_record = await PriceRecordService.get_price_record(price_record_id)
-    return PriceRecordInDB(**created_record.model_dump())
+    created_record = await PriceRecordService.create_price_record(price_record)
+    if created_record:
+        return PriceRecordInDB(**created_record.dict())
+    raise HTTPException(status_code=400, detail="Failed to create price record")
 
 @router.get("/price_records/{price_record_id}", response_model=PriceRecordInDB)
 async def read_price_record(price_record_id: str):
     price_record = await PriceRecordService.get_price_record(price_record_id)
     if price_record is None:
         raise HTTPException(status_code=404, detail="Price record not found")
-    return PriceRecordInDB(**price_record.model_dump())
+    return PriceRecordInDB(**price_record.dict())
 
 @router.put("/price_records/{price_record_id}", response_model=PriceRecordInDB)
 async def update_price_record(price_record_id: str, price_record: PriceRecordUpdate):
-    updated = await PriceRecordService.update_price_record(price_record_id, price_record.model_dump(exclude_unset=True))
-    if not updated:
-        raise HTTPException(status_code=404, detail="Price record not found")
-    updated_price_record = await PriceRecordService.get_price_record(price_record_id)
-    return PriceRecordInDB(**updated_price_record.model_dump())
+    updated_record = await PriceRecordService.update_price_record(price_record_id, price_record)
+    if updated_record is None:
+        raise HTTPException(status_code=404, detail="Price record not found or not updated")
+    return PriceRecordInDB(**updated_record.dict())
 
 @router.delete("/price_records/{price_record_id}", response_model=bool)
 async def delete_price_record(price_record_id: str):

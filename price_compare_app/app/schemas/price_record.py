@@ -4,13 +4,14 @@ from typing import Optional
 from datetime import datetime
 
 class PriceRecordCreate(BaseModel):
-    product_name: str  # 使用 product_name 替代 product_id
+    product_name: str
     price: float
     unit: str
     store: str
     date: Optional[datetime] = None
 
 class PriceRecordUpdate(BaseModel):
+    product_name: Optional[str] = None
     price: Optional[float] = None
     unit: Optional[str] = None
     store: Optional[str] = None
