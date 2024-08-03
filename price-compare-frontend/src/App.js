@@ -13,7 +13,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/add" element={<AddRecord />} />
-          <Route path="/edit/:id" element={<EditRecord />} />
+          <Route path="/edit/:price_record_id" element={<EditRecord />} />
           <Route path="/compare" element={<Comparison />} />
         </Routes>
       </Layout>

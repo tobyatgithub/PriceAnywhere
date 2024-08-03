@@ -39,6 +39,15 @@ It shall include:
 
 # How to Run
 '''bash
+// front end
+cd price-compare-frontend
+npm start
+
+// backend
+cd price_compare_app
+uvicorn app.main:app --reload
+
+// nope
 > python manage.py runserver
 '''
 

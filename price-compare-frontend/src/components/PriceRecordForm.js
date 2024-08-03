@@ -43,12 +43,15 @@ const PriceRecordForm = ({ initialData, onSubmit }) => {
     e.preventDefault();
     if (validateForm()) {
       try {
-        if (initialData && initialData.id) {
-          await updatePriceRecord(initialData.id, formData);
+        let result;
+        if (initialData && initialData._id) {
+          // If we have an initial _id, we're updating
+          result = await updatePriceRecord(initialData._id, formData);
         } else {
-          await createPriceRecord(formData);
+          // If we don't have an initial _id, we're creating
+          result = await createPriceRecord(formData);
         }
-        onSubmit(formData);
+        onSubmit(result);
       } catch (error) {
         console.error('Error submitting form:', error);
         setErrors({ submit: 'Failed to submit the form. Please try again.' });

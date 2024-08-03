@@ -6,12 +6,14 @@ const api = axios.create({
   baseURL: API_BASE_URL,
 });
 
-export const getPriceRecords = () => api.get('/price_records/');  // 注意这里添加了末尾的斜杠
+export const getPriceRecords = () => api.get('/price_records/');
+export const getPriceRecord = (id) => api.get(`/price_records/${id}`);
 export const createPriceRecord = (data) => api.post('/price_records/', data);
-export const updatePriceRecord = (id, data) => api.put(`/price_records/${id}/`, data);
-export const deletePriceRecord = (id) => api.delete(`/price_records/${id}/`);
+export const updatePriceRecord = (id, data) => api.put(`/price_records/${id}`, data);
+export const deletePriceRecord = (id) => api.delete(`/price_records/${id}`);
+export const comparePrices = (productName) => api.get(`/price_records/compare/${productName}`);
 
-// 添加错误拦截器
+// Add error interceptor
 api.interceptors.response.use(
   (response) => response,
   (error) => {

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import PriceRecordForm from '../components/PriceRecordForm';
-import api from '../services/api';
+import { getPriceRecord } from '../services/api';
 
 const EditRecord = () => {
-  const { id } = useParams();
+  const { price_record_id } = useParams();
   const navigate = useNavigate();
   const [record, setRecord] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -12,21 +12,28 @@ const EditRecord = () => {
 
   useEffect(() => {
     const fetchRecord = async () => {
+      if (!price_record_id) {
+        setError('No record ID provided');
+        setLoading(false);
+        return;
+      }
       try {
-        const response = await api.get(`/price_records/${id}`);
+        const response = await getPriceRecord(price_record_id);
         setRecord(response.data);
       } catch (err) {
-        setError('Failed to fetch record. Please try again later.');
+        console.error('Fetch error:', err);
+        setError(`Failed to fetch record. ${err.response ? err.response.data.detail : err.message}`);
       } finally {
         setLoading(false);
       }
     };
 
     fetchRecord();
-  }, [id]);
+  }, [price_record_id]);
 
-  const handleSubmit = () => {
-    navigate('/'); // Redirect to home page after successful edit
+  const handleSubmit = (result) => {
+    console.log('Record updated:', result);
+    navigate('/');
   };
 
   if (loading) return <div>Loading...</div>;

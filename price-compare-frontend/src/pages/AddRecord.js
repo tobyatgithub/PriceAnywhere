@@ -5,8 +5,9 @@ import PriceRecordForm from '../components/PriceRecordForm';
 const AddRecord = () => {
   const navigate = useNavigate();
 
-  const handleSubmit = () => {
-    navigate('/'); // Redirect to home page after successful submission
+  const handleSubmit = (result) => {
+    console.log('New record created:', result);
+    navigate('/');
   };
 
   return (
