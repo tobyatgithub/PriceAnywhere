@@ -1,27 +1,10 @@
 # app/models/product.py
 from pydantic import BaseModel, Field
-from typing import Optional, Any
+from typing import Optional
 from bson import ObjectId
 
-class PyObjectId(ObjectId):
-    @classmethod
-    def __get_validators__(cls):
-        yield cls.validate
-
-    @classmethod
-    def validate(cls, v: Any) -> ObjectId:
-        if not isinstance(v, ObjectId):
-            if not ObjectId.is_valid(v):
-                raise ValueError("Invalid objectid")
-            v = ObjectId(v)
-        return v
-
-    @classmethod
-    def __get_pydantic_json_schema__(cls, field_schema):
-        field_schema.update(type="string")
-
 class ProductModel(BaseModel):
-    id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
+    id: Optional[str] = Field(alias="_id", default=None)
     name: str
     category: str
     brand: Optional[str] = None
@@ -30,13 +13,18 @@ class ProductModel(BaseModel):
         populate_by_name = True
         arbitrary_types_allowed = True
         json_encoders = {ObjectId: str}
-        
-    def model_dump(self, **kwargs):
-        if 'exclude' in kwargs:
-            kwargs['exclude'] = set(kwargs['exclude']) | {'id'}
-        else:
-            kwargs['exclude'] = {'id'}
-        data = super().model_dump(**kwargs)
-        if '_id' in data:
-            data['id'] = str(data['_id'])
+
+    @classmethod
+    def from_mongo(cls, data: dict):
+        """We must convert _id from ObjectId to str"""
+        if not data:
+            return data
+        id = data.pop('_id', None)
+        return cls(**dict(data, id=str(id) if id else None))
+
+    def to_mongo(self):
+        """Convert id to ObjectId"""
+        data = self.model_dump(by_alias=True, exclude_none=True)
+        if data.get("_id"):
+            data["_id"] = ObjectId(data["_id"])
         return data

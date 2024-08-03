@@ -8,7 +8,7 @@ product_collection = database.get_collection("products")
 class ProductService:
     @staticmethod
     async def create_product(product: ProductModel):
-        product_dict = product.model_dump(exclude={'id'})
+        product_dict = product.to_mongo()
         result = await product_collection.insert_one(product_dict)
         return str(result.inserted_id)
 
@@ -16,7 +16,7 @@ class ProductService:
     async def get_product(product_id: str):
         product = await product_collection.find_one({"_id": ObjectId(product_id)})
         if product:
-            return ProductModel(**product)
+            return ProductModel.from_mongo(product)
 
     @staticmethod
     async def update_product(product_id: str, product_data: dict):
@@ -34,5 +34,5 @@ class ProductService:
     async def list_products():
         products = []
         async for product in product_collection.find():
-            products.append(ProductModel(**product))
+            products.append(ProductModel.from_mongo(product))
         return products
