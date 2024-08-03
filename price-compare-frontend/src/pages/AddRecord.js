@@ -1,10 +1,12 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import PriceRecordForm from '../components/PriceRecordForm';
 
 const AddRecord = () => {
-  const handleSubmit = (formData) => {
-    // 这里我们将来会添加 API 调用
-    console.log('Submitting form data:', formData);
+  const navigate = useNavigate();
+
+  const handleSubmit = () => {
+    navigate('/'); // Redirect to home page after successful submission
   };
 
   return (

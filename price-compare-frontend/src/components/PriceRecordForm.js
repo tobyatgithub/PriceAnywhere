@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { createPriceRecord, updatePriceRecord } from '../services/api';
 
 const PriceRecordForm = ({ initialData, onSubmit }) => {
   const [formData, setFormData] = useState({
@@ -38,10 +39,20 @@ const PriceRecordForm = ({ initialData, onSubmit }) => {
     return Object.keys(tempErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (validateForm()) {
-      onSubmit(formData);
+      try {
+        if (initialData && initialData.id) {
+          await updatePriceRecord(initialData.id, formData);
+        } else {
+          await createPriceRecord(formData);
+        }
+        onSubmit(formData);
+      } catch (error) {
+        console.error('Error submitting form:', error);
+        setErrors({ submit: 'Failed to submit the form. Please try again.' });
+      }
     }
   };
 
