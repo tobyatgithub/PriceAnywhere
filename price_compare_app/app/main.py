@@ -1,10 +1,11 @@
 # app/main.py
 from fastapi import FastAPI
-from app.routers import products
+from app.routers import products, price_records
 
 app = FastAPI()
 
 app.include_router(products.router)
+app.include_router(price_records.router)
 
 @app.get("/")
 async def root():
